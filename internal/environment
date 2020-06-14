@@ -1,9 +1,17 @@
-#!/bin/bash
-
-export DRAGONBUILD=~/.dragonbuild/
-
-export PATH=$PATH+":/usr/local/bin/"
-
-source $DRAGONBUILD/state/phoneip
-
+#!/hint/bash
+# This file is meant to be sourced
 export DRAGONVERS="1.0.1"
+
+if [[ -n "${DRAGONBUILD}" ]]; then
+    export DRAGONBUILD
+else
+    export DRAGONBUILD="${HOME}/.dragonbuild"
+fi
+
+path_prefix="/usr/local/bin"
+if ! printf "${PATH}" | grep "${path_prefix}" &>/dev/null; then
+    export PATH="${PATH}:${path_prefix}"
+fi
+unset path_prefix
+
+source "${DRAGONBUILD}"/state/phoneip
